@@ -20,6 +20,8 @@
 		DAA1CB3A227E510F00E4B6E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAA1CB01227E1FF100E4B6E2 /* Assets.xcassets */; };
 		DAA1CB3B227E511500E4B6E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAA1CAFB227E1FEE00E4B6E2 /* Main.storyboard */; };
 		DAA1CB3C227E511C00E4B6E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAA1CB03227E1FF100E4B6E2 /* LaunchScreen.storyboard */; };
+		DAA1CB4D227E715700E4B6E2 /* Task+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA1CB4B227E715700E4B6E2 /* Task+CoreDataClass.swift */; };
+		DAA1CB4E227E715700E4B6E2 /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA1CB4C227E715700E4B6E2 /* Task+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		DAA1CB20227E34DA00E4B6E2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DAA1CB22227E357C00E4B6E2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		DAA1CB24227E48F600E4B6E2 /* EntityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityType.swift; sourceTree = "<group>"; };
+		DAA1CB4B227E715700E4B6E2 /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+CoreDataClass.swift"; path = "/Users/a/Desktop/Projects/Agenda/Agenda/Data Persistence/Task+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		DAA1CB4C227E715700E4B6E2 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+CoreDataProperties.swift"; path = "/Users/a/Desktop/Projects/Agenda/Agenda/Data Persistence/Task+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		DAFF99ED33C795F18A0930C3 /* Pods_AgendaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgendaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -163,6 +167,8 @@
 				DAA1CB24227E48F600E4B6E2 /* EntityType.swift */,
 				DAA1CAFE227E1FEE00E4B6E2 /* Agenda.xcdatamodeld */,
 				DAA1CB20227E34DA00E4B6E2 /* CoreDataManager.swift */,
+				DAA1CB4B227E715700E4B6E2 /* Task+CoreDataClass.swift */,
+				DAA1CB4C227E715700E4B6E2 /* Task+CoreDataProperties.swift */,
 			);
 			path = "Data Persistence";
 			sourceTree = "<group>";
@@ -350,7 +356,9 @@
 			files = (
 				DAA1CB00227E1FEE00E4B6E2 /* Agenda.xcdatamodeld in Sources */,
 				DAA1CB23227E357C00E4B6E2 /* HomeViewModel.swift in Sources */,
+				DAA1CB4D227E715700E4B6E2 /* Task+CoreDataClass.swift in Sources */,
 				DAA1CAFA227E1FEE00E4B6E2 /* HomeViewController.swift in Sources */,
+				DAA1CB4E227E715700E4B6E2 /* Task+CoreDataProperties.swift in Sources */,
 				DAA1CB21227E34DA00E4B6E2 /* CoreDataManager.swift in Sources */,
 				DAA1CB1F227E346B00E4B6E2 /* AppSync.swift in Sources */,
 				DAA1CAF8227E1FEE00E4B6E2 /* AppDelegate.swift in Sources */,

@@ -11,6 +11,8 @@ import CoreData
 
 class CoreDataManager {
     
+    static var sharedInstance = CoreDataManager()
+    
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Agenda")
@@ -25,26 +27,34 @@ class CoreDataManager {
     
     // MARK: - Core Data Saving support
     func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
+        let managedObjectContext = persistentContainer.viewContext
+        if managedObjectContext.hasChanges {
             do {
-                try context.save()
+                try managedObjectContext.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
     }
     
+    func fetchTasksBy(title: String) -> [Task] {
+        let fetchRequest = NSFetchRequest<Task>(entityName: "Task")
+        fetchRequest.predicate = NSPredicate(format: "title == %@", title)
+        guard let tasks = try? persistentContainer.viewContext.fetch(fetchRequest) else {
+            fatalError("Task: \(title) does not exist")
+        }
+        return tasks
+    }
+    
+    func sortTasksBy(title: String) -> [Task] {
+        let fetchRequest = Task.fetchRequest() as NSFetchRequest<Task>
+        let sort = NSSortDescriptor(keyPath: \Task.title, ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        guard let tasks = try? persistentContainer.viewContext.fetch(fetchRequest) else {
+            fatalError("Issue sorting by: \(title)")
+        }
+        return tasks
+    }
+    
 }
-    
-    
-//    func addTestData() {
-//        let managedObjectContext = persistentContainer.viewContext
-//
-//        guard let entity = NSEntityDescription.entity(forEntityName: "Task", in: ) else {
-//            fatalError("Could not find Task entity description")
-//        }
-//    }
