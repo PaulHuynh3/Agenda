@@ -1,5 +1,5 @@
 //
-//  EntityType.swift
+//  HomeViewModel.swift
 //  Agenda
 //
 //  Created by Paul on 2019-05-04.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum EntityType: String {
-    case task = "Task"
+class HomeViewModel {
+    
 }

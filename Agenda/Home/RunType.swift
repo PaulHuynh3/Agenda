@@ -1,15 +1,14 @@
 //
-//  HomeViewModel.swift
+//  RunType.swift
 //  Agenda
 //
 //  Created by Paul on 2019-05-04.
 //  Copyright © 2019 PaulsWork. All rights reserved.
 //
 
-import Foundation
-
-class HomeViewModel {
-    
-    
-    
+enum RunType {
+    case viewTask
+    case insert
+    case update
+    case delete
 }

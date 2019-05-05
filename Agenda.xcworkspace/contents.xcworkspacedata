@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/a/Desktop/Projects/Agenda/Agenda/Data Persistence/Task+CoreDataClass.swift">
+      location = "group:Task+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:/Users/a/Desktop/Projects/Agenda/Agenda/Data Persistence/Task+CoreDataProperties.swift">
+      location = "group:Task+CoreDataProperties.swift">
    </FileRef>
    <FileRef
       location = "group:Agenda.xcodeproj">
