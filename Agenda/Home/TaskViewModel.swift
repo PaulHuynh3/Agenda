@@ -8,6 +8,6 @@
 
 import Foundation
 
-class HomeViewModel {
+class TaskViewModel {
     
 }

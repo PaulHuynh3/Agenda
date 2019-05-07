@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TaskViewController.swift
 //  Agenda
 //
 //  Created by Paul on 2019-05-04.
@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AWSAppSync
 
 class TaskViewController: UIViewController {
 
@@ -29,24 +30,28 @@ class TaskViewController: UIViewController {
         }
     }
     private var runType: RunType!
-    private var coreDataManager: CoreDataManager
-    private let context: NSManagedObjectContext
-    private var tasks: [Task]
-    
-    required init?(coder aDecoder: NSCoder) {
-        coreDataManager = CoreDataManager()
-        context = coreDataManager.persistentContainer.viewContext
-        tasks = [Task]()
-        super.init(coder: aDecoder)
-    }
+    private var coreDataManager = CoreDataManager()
+    private let context = CoreDataManager.sharedInstance.persistentContainer.viewContext
+    private var tasks = [Task]()
+    var appSyncClient: AWSAppSyncClient?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         runType = RunType.viewTask
-        let tasks = coreDataManager.fetchTasksBy(title: "First Task")
-        for task in tasks {
-          print(task)
-        }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appSyncClient = appDelegate.appSyncClient
+        
+        let resignKeyboardWithTapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(resignKeyboardWithTapGesture)
+        
+//        let tasks = coreDataManager.fetchTasksBy(title: "First Task")
+//        for task in tasks {
+//          print(task)
+//        }
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     private func persistTask() {
@@ -77,7 +82,7 @@ class TaskViewController: UIViewController {
         addDataView.isHidden = true
         selectedTable.isHidden = false
         runType = RunType.viewTask
-//        selectData()
+        selectData()
     }
     
     @IBAction func insertTapped(_ sender: UIButton) {
@@ -103,16 +108,103 @@ class TaskViewController: UIViewController {
     
     @IBAction func runTapped(_ sender: Any) {
         switch runType {
-        case .viewTask?:
-            print("selectData for now")//selectData()
+        case .some(.viewTask):
+            break
         case .some(.insert):
-            print("insert data")
+            if nameTextField.text!.count < 1 || descriptionTextField.text!.count < 1 {
+                showAlert(title: "Error", messageString: "Please insert data")
+            } else {
+                insertData()
+            }
         case .some(.update):
-            print("update data")
+            if idTextField.text!.count < 1 || nameTextField.text!.count < 1 || descriptionTextField.text!.count < 1 {
+                showAlert(title: "Error", messageString: "Please insert data")
+            } else {
+                updateData()
+            }
         case .some(.delete):
-            print("delete data")
+            if idTextField.text!.count < 1{
+                showAlert(title: "Error", messageString: "Please insert data")
+            } else {
+                deleteData()
+            }
         case .none:
             break
+        }
+        idTextField.text = ""
+        descriptionTextField.text = ""
+        nameTextField.text = ""
+    }
+    
+    func showAlert(title: String, messageString: String) {
+        let alertController = UIAlertController(title: title, message: messageString, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func selectData() {
+        let selectQuery = ListTodosQuery()
+        appSyncClient?.fetch(query: selectQuery, cachePolicy: .fetchIgnoringCacheData) {(result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+                return
+            }
+            result?.data?.listTodos?.items?.forEach {
+                let task = Task(context: self.context)
+                task.title = $0?.name
+                task.contentDescription = $0?.description
+                self.tasks.append(task)
+                self.selectedTable.reloadData()
+            }
+        }
+    }
+    
+    //AWS API
+    func insertData() {
+        let insertQuery = CreateTodoInput(name: nameTextField.text!, description:descriptionTextField.text!)
+        appSyncClient?.perform(mutation: CreateTodoMutation(input: insertQuery)) { (result, error) in
+//            self.selectData()
+            if let error = error as? AWSAppSyncClientError {
+                print("Error occurred: \(error.localizedDescription )")
+            } else if let resultError = result?.errors {
+                print("Error saving the item on server: \(resultError)")
+                return
+            } else {
+                self.showAlert(title: "Success", messageString: "Data Inserted")
+            }
+        }
+    }
+    
+    func updateData() {
+        var updateQuery = UpdateTodoInput(id: idTextField.text!)
+        updateQuery.name = nameTextField.text!
+        updateQuery.description = descriptionTextField.text!
+        appSyncClient?.perform(mutation: UpdateTodoMutation(input: updateQuery)) { (result, error) in
+            if let error = error as? AWSAppSyncClientError {
+                print("Error occurred: \(error.localizedDescription )")
+            } else if let resultError = result?.errors {
+                print("Error saving the item on server: \(resultError)")
+                return
+            } else {
+                self.showAlert(title: "Success", messageString: "Data was updated in the server")
+                print("Data Updated")
+            }
+        }
+    }
+    
+    func deleteData() {
+        let deleteQuery = DeleteTodoInput(id: idTextField.text!)
+        appSyncClient?.perform(mutation: DeleteTodoMutation(input: deleteQuery)) { (result, error) in
+            if let error = error as? AWSAppSyncClientError {
+                print("Error occurred: \(error.localizedDescription )")
+            } else if let resultError = result?.errors {
+                print("Error saving the item on server: \(resultError)")
+                return
+            } else {
+                self.showAlert(title: "Success", messageString: "Data was deleted from the server")
+                print("Data Deleted")
+            }
         }
     }
 }

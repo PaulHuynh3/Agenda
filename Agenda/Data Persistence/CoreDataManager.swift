@@ -57,4 +57,14 @@ class CoreDataManager {
         return tasks
     }
     
+    func delete(task: Task) {
+        let manageObjectContext = persistentContainer.viewContext
+        manageObjectContext.delete(task)
+        do {
+            try manageObjectContext.save()
+        } catch {
+            print("Error saving the deletion of: \(String(describing: task.title))")
+        }
+    }
+    
 }
