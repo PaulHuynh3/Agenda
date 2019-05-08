@@ -1,0 +1,14 @@
+{
+    "develop": {
+        "awscloudformation": {
+            "AuthRoleName": "agenda-develop-20190505165929-authRole",
+            "UnauthRoleArn": "arn:aws:iam::439019932459:role/agenda-develop-20190505165929-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::439019932459:role/agenda-develop-20190505165929-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "agenda-develop-20190505165929-deployment",
+            "UnauthRoleName": "agenda-develop-20190505165929-unauthRole",
+            "StackName": "agenda-develop-20190505165929",
+            "StackId": "arn:aws:cloudformation:us-east-1:439019932459:stack/agenda-develop-20190505165929/ad00a4d0-6f78-11e9-9062-0eff07caa3c6"
+        }
+    }
+}

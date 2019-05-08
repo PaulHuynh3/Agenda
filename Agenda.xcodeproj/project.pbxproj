@@ -9,13 +9,15 @@
 /* Begin PBXBuildFile section */
 		269B34AE3FABB8B06D78B89A /* Pods_Agenda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90FC314AF51FECC5FEF0DF25 /* Pods_Agenda.framework */; };
 		C31E617B32AA533B61A67B52 /* Pods_AgendaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAFF99ED33C795F18A0930C3 /* Pods_AgendaTests.framework */; };
+		DA0CD444227F89E1004BBDF8 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0CD443227F89E1004BBDF8 /* API.swift */; };
+		DA0CD446227F93BB004BBDF8 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = DA0CD445227F93BB004BBDF8 /* awsconfiguration.json */; };
+		DA20BFD92282A76F00EE62C7 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20BFD82282A76F00EE62C7 /* TaskTableViewCell.swift */; };
+		DA20BFDB2282A78300EE62C7 /* TaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA20BFDA2282A78300EE62C7 /* TaskTableViewCell.xib */; };
 		DAA1CAF8227E1FEE00E4B6E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA1CAF7227E1FEE00E4B6E2 /* AppDelegate.swift */; };
 		DAA1CAFA227E1FEE00E4B6E2 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA1CAF9227E1FEE00E4B6E2 /* TaskViewController.swift */; };
 		DAA1CB00227E1FEE00E4B6E2 /* Agenda.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DAA1CAFE227E1FEE00E4B6E2 /* Agenda.xcdatamodeld */; };
 		DAA1CB10227E1FF100E4B6E2 /* AgendaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA1CB0F227E1FF100E4B6E2 /* AgendaTests.swift */; };
-		DAA1CB1F227E346B00E4B6E2 /* AppSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA1CB1E227E346B00E4B6E2 /* AppSync.swift */; };
 		DAA1CB21227E34DA00E4B6E2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA1CB20227E34DA00E4B6E2 /* CoreDataManager.swift */; };
-		DAA1CB23227E357C00E4B6E2 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA1CB22227E357C00E4B6E2 /* TaskViewModel.swift */; };
 		DAA1CB3A227E510F00E4B6E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAA1CB01227E1FF100E4B6E2 /* Assets.xcassets */; };
 		DAA1CB3B227E511500E4B6E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAA1CAFB227E1FEE00E4B6E2 /* Main.storyboard */; };
 		DAA1CB3C227E511C00E4B6E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAA1CB03227E1FF100E4B6E2 /* LaunchScreen.storyboard */; };
@@ -40,6 +42,10 @@
 		90FC314AF51FECC5FEF0DF25 /* Pods_Agenda.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Agenda.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C882E0C329BDF1E2D87DF32 /* Pods-Agenda.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Agenda.debug.xcconfig"; path = "Target Support Files/Pods-Agenda/Pods-Agenda.debug.xcconfig"; sourceTree = "<group>"; };
 		A3448AFD3C6E8E293AA5EB40 /* Pods-Agenda.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Agenda.release.xcconfig"; path = "Target Support Files/Pods-Agenda/Pods-Agenda.release.xcconfig"; sourceTree = "<group>"; };
+		DA0CD443227F89E1004BBDF8 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = SOURCE_ROOT; };
+		DA0CD445227F93BB004BBDF8 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		DA20BFD82282A76F00EE62C7 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		DA20BFDA2282A78300EE62C7 /* TaskTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskTableViewCell.xib; sourceTree = "<group>"; };
 		DAA1CAF4227E1FEE00E4B6E2 /* Agenda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Agenda.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAA1CAF7227E1FEE00E4B6E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAA1CAF9227E1FEE00E4B6E2 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
@@ -51,9 +57,7 @@
 		DAA1CB0B227E1FF100E4B6E2 /* AgendaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AgendaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAA1CB0F227E1FF100E4B6E2 /* AgendaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaTests.swift; sourceTree = "<group>"; };
 		DAA1CB11227E1FF100E4B6E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DAA1CB1E227E346B00E4B6E2 /* AppSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSync.swift; sourceTree = "<group>"; };
 		DAA1CB20227E34DA00E4B6E2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		DAA1CB22227E357C00E4B6E2 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		DAA1CB4F227E848E00E4B6E2 /* RunType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunType.swift; sourceTree = "<group>"; };
 		DAA1CB51227E9A7800E4B6E2 /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+CoreDataClass.swift"; path = "../../Task+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DAA1CB52227E9A7800E4B6E2 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+CoreDataProperties.swift"; path = "../../Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -100,9 +104,19 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		DA20BFD72282A5E400EE62C7 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				DA20BFD82282A76F00EE62C7 /* TaskTableViewCell.swift */,
+				DA20BFDA2282A78300EE62C7 /* TaskTableViewCell.xib */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
 		DAA1CAEB227E1FEE00E4B6E2 = {
 			isa = PBXGroup;
 			children = (
+				DA0CD445227F93BB004BBDF8 /* awsconfiguration.json */,
 				DAA1CAF6227E1FEE00E4B6E2 /* Agenda */,
 				DAA1CB0E227E1FF100E4B6E2 /* AgendaTests */,
 				DAA1CAF5227E1FEE00E4B6E2 /* Products */,
@@ -148,7 +162,7 @@
 			children = (
 				DAA1CB4F227E848E00E4B6E2 /* RunType.swift */,
 				DAA1CAF9227E1FEE00E4B6E2 /* TaskViewController.swift */,
-				DAA1CB22227E357C00E4B6E2 /* TaskViewModel.swift */,
+				DA20BFD72282A5E400EE62C7 /* TableViewCell */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -176,7 +190,7 @@
 		DAA1CB1D227E344D00E4B6E2 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				DAA1CB1E227E346B00E4B6E2 /* AppSync.swift */,
+				DA0CD443227F89E1004BBDF8 /* API.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -265,9 +279,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA0CD446227F93BB004BBDF8 /* awsconfiguration.json in Resources */,
 				DAA1CB3C227E511C00E4B6E2 /* LaunchScreen.storyboard in Resources */,
 				DAA1CB3B227E511500E4B6E2 /* Main.storyboard in Resources */,
 				DAA1CB3A227E510F00E4B6E2 /* Assets.xcassets in Resources */,
+				DA20BFDB2282A78300EE62C7 /* TaskTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,13 +328,19 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Agenda/Pods-Agenda-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSAppSync/AWSAppSync.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSAppSync.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -355,13 +377,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAA1CB00227E1FEE00E4B6E2 /* Agenda.xcdatamodeld in Sources */,
-				DAA1CB23227E357C00E4B6E2 /* TaskViewModel.swift in Sources */,
 				DAA1CB53227E9A7900E4B6E2 /* Task+CoreDataClass.swift in Sources */,
+				DA20BFD92282A76F00EE62C7 /* TaskTableViewCell.swift in Sources */,
 				DAA1CAFA227E1FEE00E4B6E2 /* TaskViewController.swift in Sources */,
+				DA0CD444227F89E1004BBDF8 /* API.swift in Sources */,
 				DAA1CB54227E9A7900E4B6E2 /* Task+CoreDataProperties.swift in Sources */,
 				DAA1CB21227E34DA00E4B6E2 /* CoreDataManager.swift in Sources */,
 				DAA1CB50227E848E00E4B6E2 /* RunType.swift in Sources */,
-				DAA1CB1F227E346B00E4B6E2 /* AppSync.swift in Sources */,
 				DAA1CAF8227E1FEE00E4B6E2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

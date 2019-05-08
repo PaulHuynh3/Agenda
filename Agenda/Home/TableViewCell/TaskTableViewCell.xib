@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellIdentifier" rowHeight="114" id="5Yl-gr-b42" customClass="TaskTableViewCell" customModule="Agenda" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="491" height="114"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5Yl-gr-b42" id="tdn-aN-TYG">
+                <rect key="frame" x="0.0" y="0.0" width="491" height="113.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkR-Gi-zXO" userLabel="Title">
+                        <rect key="frame" x="229.5" y="27" width="32" height="20"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpi-fc-Hri" userLabel="Description">
+                        <rect key="frame" x="20" y="55" width="451" height="20"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K4k-ax-iUK">
+                        <rect key="frame" x="20" y="85" width="14.5" height="17.5"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="K4k-ax-iUK" firstAttribute="top" secondItem="wpi-fc-Hri" secondAttribute="bottom" constant="10" id="Ik3-jl-XsT"/>
+                    <constraint firstItem="wpi-fc-Hri" firstAttribute="centerX" secondItem="tdn-aN-TYG" secondAttribute="centerX" id="KNk-ro-1Mg"/>
+                    <constraint firstItem="QkR-Gi-zXO" firstAttribute="top" secondItem="tdn-aN-TYG" secondAttribute="top" constant="27" id="TF9-oh-Y4H"/>
+                    <constraint firstAttribute="trailing" secondItem="wpi-fc-Hri" secondAttribute="trailing" constant="20" id="TTD-WT-u3p"/>
+                    <constraint firstItem="wpi-fc-Hri" firstAttribute="leading" secondItem="tdn-aN-TYG" secondAttribute="leading" constant="20" id="Vzs-Lb-J87"/>
+                    <constraint firstItem="wpi-fc-Hri" firstAttribute="top" secondItem="QkR-Gi-zXO" secondAttribute="bottom" constant="8" id="YMY-x3-ype"/>
+                    <constraint firstItem="K4k-ax-iUK" firstAttribute="leading" secondItem="tdn-aN-TYG" secondAttribute="leading" constant="20" id="isf-zz-rB9"/>
+                    <constraint firstItem="QkR-Gi-zXO" firstAttribute="centerX" secondItem="tdn-aN-TYG" secondAttribute="centerX" id="tbQ-q5-2nb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descriptionLabel" destination="wpi-fc-Hri" id="MqA-x3-2Su"/>
+                <outlet property="idLabel" destination="K4k-ax-iUK" id="8j1-4R-fm2"/>
+                <outlet property="titleLabel" destination="QkR-Gi-zXO" id="Idg-oH-ep4"/>
+            </connections>
+            <point key="canvasLocation" x="-315.21739130434787" y="17.410714285714285"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TaskViewController.swift
 //  Agenda
 //
 //  Created by Paul on 2019-05-04.
@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AWSAppSync
 
 class TaskViewController: UIViewController {
 
@@ -29,24 +30,30 @@ class TaskViewController: UIViewController {
         }
     }
     private var runType: RunType!
-    private var coreDataManager: CoreDataManager
-    private let context: NSManagedObjectContext
-    private var tasks: [Task]
-    
-    required init?(coder aDecoder: NSCoder) {
-        coreDataManager = CoreDataManager()
-        context = coreDataManager.persistentContainer.viewContext
-        tasks = [Task]()
-        super.init(coder: aDecoder)
-    }
+    private var coreDataManager = CoreDataManager()
+    private let context = CoreDataManager.sharedInstance.persistentContainer.viewContext
+    private var tasks = [Task]()
+    var appSyncClient: AWSAppSyncClient?
+    let cellIdentifier = "cellIdentifier"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         runType = RunType.viewTask
-        let tasks = coreDataManager.fetchTasksBy(title: "First Task")
-        for task in tasks {
-          print(task)
-        }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appSyncClient = appDelegate.appSyncClient
+        let resignKeyboardWithTapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(resignKeyboardWithTapGesture)
+        registerTableViewCell()
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    private func registerTableViewCell() {
+        let taskTableViewCell = "TaskTableViewCell"
+        let viewMoreContentNib = UINib(nibName: taskTableViewCell, bundle: nil)
+        selectedTable.register(viewMoreContentNib, forCellReuseIdentifier: cellIdentifier)
     }
 
     private func persistTask() {
@@ -77,13 +84,11 @@ class TaskViewController: UIViewController {
         addDataView.isHidden = true
         selectedTable.isHidden = false
         runType = RunType.viewTask
-//        selectData()
+        selectData()
     }
     
     @IBAction func insertTapped(_ sender: UIButton) {
         showView()
-        idTextField.isHidden = true
-        idLabel.isHidden = true
         runType = RunType.insert
     }
     
@@ -103,16 +108,108 @@ class TaskViewController: UIViewController {
     
     @IBAction func runTapped(_ sender: Any) {
         switch runType {
-        case .viewTask?:
-            print("selectData for now")//selectData()
+        case .some(.viewTask):
+            break
         case .some(.insert):
-            print("insert data")
+            if nameTextField.text!.count < 1 || descriptionTextField.text!.count < 1 || idTextField.text!.count < 1 {
+                showAlert(title: "Error", messageString: "Please fill out the textfields!")
+            } else {
+                insertData()
+            }
         case .some(.update):
-            print("update data")
+            if idTextField.text!.count < 1 || nameTextField.text!.count < 1 || descriptionTextField.text!.count < 1 {
+                showAlert(title: "Error", messageString: "Please fill out the textfields!")
+            } else {
+                updateData()
+            }
         case .some(.delete):
-            print("delete data")
+            if idTextField.text!.count < 1{
+                showAlert(title: "Error", messageString: "Please fill out the textfields!")
+            } else {
+                deleteData()
+            }
         case .none:
             break
+        }
+    }
+    
+    private func emptyTextField() {
+        idTextField.text = ""
+        descriptionTextField.text = ""
+        nameTextField.text = ""
+    }
+    
+    private func showAlert(title: String, messageString: String) {
+        let alertController = UIAlertController(title: title, message: messageString, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func selectData() {
+        let selectQuery = ListTodosQuery()
+        appSyncClient?.fetch(query: selectQuery, cachePolicy: .fetchIgnoringCacheData) {(result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+                return
+            }
+            result?.data?.listTodos?.items?.forEach {
+                let task = Task(context: self.context)
+                task.title = $0?.name
+                task.contentDescription = $0?.description
+                task.id = $0?.id
+                
+                if !self.tasks.contains(where: { ($0.title == task.title)} ) {
+                    self.tasks.append(task)
+                }
+                self.selectedTable.reloadData()
+            }
+        }
+    }
+    
+    //AWS API
+    func insertData() {
+        let insertQuery = CreateTodoInput(id: idTextField.text!, name: nameTextField.text!, description: descriptionTextField.text!)
+        
+        appSyncClient?.perform(mutation: CreateTodoMutation(input: insertQuery)) { (result, error) in
+            if let error = error as? AWSAppSyncClientError {
+                self.showAlert(title: "Error", messageString: error.localizedDescription)
+            } else if let _ = result?.errors {
+                self.showAlert(title: "Error", messageString: "Please insert unique ID")
+            } else {
+                self.showAlert(title: "Success", messageString: "Data Inserted")
+                self.emptyTextField()
+            }
+        }
+    }
+    
+    func updateData() {
+        var updateQuery = UpdateTodoInput(id: idTextField.text!)
+        updateQuery.name = nameTextField.text!
+        updateQuery.description = descriptionTextField.text!
+        appSyncClient?.perform(mutation: UpdateTodoMutation(input: updateQuery)) { (result, error) in
+            if let error = error as? AWSAppSyncClientError {
+                self.showAlert(title: "Error", messageString: error.localizedDescription)
+            } else if let resultError = result?.errors {
+                self.showAlert(title: "Error", messageString: "Error saving the item on server")
+            } else {
+                self.showAlert(title: "Success", messageString: "Data was updated in the server")
+                self.emptyTextField()
+            }
+        }
+    }
+    
+    func deleteData() {
+        let deleteQuery = DeleteTodoInput(id: idTextField.text!)
+        appSyncClient?.perform(mutation: DeleteTodoMutation(input: deleteQuery)) { (result, error) in
+            if let error = error as? AWSAppSyncClientError {
+                self.showAlert(title: "Error", messageString: error.localizedDescription)
+            } else if let _ = result?.errors {
+                self.showAlert(title: "Error", messageString: "Error saving the item on server")
+            } else {
+                self.showAlert(title: "Success", messageString: "Data was deleted from the server")
+                self.emptyTextField()
+            }
         }
     }
 }
@@ -123,14 +220,25 @@ extension TaskViewController: UITableViewDataSource, UITableViewDelegate {
         return tasks.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") else {
-            fatalError("Returned Cell failed to load the cellIdentifier was not found")
-        }
-        cell.textLabel?.text = tasks[indexPath.row].title
-        cell.detailTextLabel?.text = tasks[indexPath.row].contentDescription
-        cell.detailTextLabel?.isHidden = false
-        return cell
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 115
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        guard let taskTableViewCell = cell as? TaskTableViewCell else {
+            fatalError("Could not find TaskTableViewCell")
+        }
+        
+        taskTableViewCell.titleLabel.text = tasks[indexPath.row].title
+        taskTableViewCell.descriptionLabel.text = tasks[indexPath.row].contentDescription
+        taskTableViewCell.idLabel.text = "ID: " + tasks[indexPath.row].id!
+
+        return cell
+    }
 }
