@@ -190,7 +190,7 @@
 		DAA1CB1D227E344D00E4B6E2 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				DA0CD443227F89E1004BBDF8 /* API.swift */,
+				DA0CD443227F89E1004BBDF8 /* API.swift */
 			);
 			path = Services;
 			sourceTree = "<group>";

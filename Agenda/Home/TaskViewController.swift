@@ -34,7 +34,7 @@ class TaskViewController: UIViewController {
     private let context = CoreDataManager.sharedInstance.persistentContainer.viewContext
     private var tasks = [Task]()
     var appSyncClient: AWSAppSyncClient?
-    let cellIdentifier = "cellIdentifier"
+    private let cellIdentifier = "cellIdentifier"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,7 +168,7 @@ class TaskViewController: UIViewController {
     }
     
     //AWS API
-    func insertData() {
+    private func insertData() {
         let insertQuery = CreateTodoInput(id: idTextField.text!, name: nameTextField.text!, description: descriptionTextField.text!)
         
         appSyncClient?.perform(mutation: CreateTodoMutation(input: insertQuery)) { (result, error) in
@@ -183,23 +183,23 @@ class TaskViewController: UIViewController {
         }
     }
     
-    func updateData() {
+    private func updateData() {
         var updateQuery = UpdateTodoInput(id: idTextField.text!)
         updateQuery.name = nameTextField.text!
         updateQuery.description = descriptionTextField.text!
         appSyncClient?.perform(mutation: UpdateTodoMutation(input: updateQuery)) { (result, error) in
             if let error = error as? AWSAppSyncClientError {
                 self.showAlert(title: "Error", messageString: error.localizedDescription)
-            } else if let resultError = result?.errors {
-                self.showAlert(title: "Error", messageString: "Error saving the item on server")
+            } else if let _ = result?.errors {
+                self.showAlert(title: "Error", messageString: "Error saving on server")
             } else {
-                self.showAlert(title: "Success", messageString: "Data was updated in the server")
+                self.showAlert(title: "Success", messageString: "Data updated to server")
                 self.emptyTextField()
             }
         }
     }
     
-    func deleteData() {
+    private func deleteData() {
         let deleteQuery = DeleteTodoInput(id: idTextField.text!)
         appSyncClient?.perform(mutation: DeleteTodoMutation(input: deleteQuery)) { (result, error) in
             if let error = error as? AWSAppSyncClientError {
@@ -207,7 +207,7 @@ class TaskViewController: UIViewController {
             } else if let _ = result?.errors {
                 self.showAlert(title: "Error", messageString: "Error saving the item on server")
             } else {
-                self.showAlert(title: "Success", messageString: "Data was deleted from the server")
+                self.showAlert(title: "Success", messageString: "Data deleted from server")
                 self.emptyTextField()
             }
         }
