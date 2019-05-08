@@ -153,13 +153,14 @@ class TaskViewController: UIViewController {
                 print(error?.localizedDescription ?? "")
                 return
             }
+            self.tasks.removeAll()
             result?.data?.listTodos?.items?.forEach {
                 let task = Task(context: self.context)
                 task.title = $0?.name
                 task.contentDescription = $0?.description
                 task.id = $0?.id
                 
-                if !self.tasks.contains(where: { ($0.title == task.title)} ) {
+                if !self.tasks.contains(where: { ($0.id == task.id)} ) {
                     self.tasks.append(task)
                 }
                 self.selectedTable.reloadData()
